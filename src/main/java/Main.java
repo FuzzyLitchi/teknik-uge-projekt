@@ -23,6 +23,7 @@ public class Main extends PApplet{
     public void setup(){
         fill(120,50,240);
         tank = new Tank( new PVector(0,0), 100, 10, 50);
+        base = new Base( new PVector (150,150), 1000, 10, 100, tank);
 
         mapLoader.generate(0,0);
         map = mapLoader.load(0,0);

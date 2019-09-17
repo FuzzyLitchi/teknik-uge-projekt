@@ -8,6 +8,7 @@ public class Base {
     float ammoRegenBullets;
     Boolean alive;
     Boolean isHome;
+    Boolean hitReg;
     Tank tank;
 
     public Base(PVector location, float hp, float ammoRegenRockets, float ammoRegenBullets, Tank tank) {
@@ -26,19 +27,16 @@ public class Base {
         }
     }
 
-    /*void hitReg (PApplet parent) {
-        if ((((location.x-enemyBulletlocation.x)^2) <= 25) && (((location.y-enemyBulletlocation.y)^2) <= 25)){
-            this.hp = hp -1;
-        }
-    }*/
+   void hitReg() {
+        if (((((this.location.x-enemyBulletlocation.x)^2) <= 0) && ((this.locaiton.y-enemyBulletlocation.y)^2) <= 0 )){
+         hp = hp -1;
+       }
+   }
 
     void display(PApplet parent) {
         parent.fill(125);
         parent.rect(this.location.x, this.location.y, 20, 100);
         parent.fill(0, 0, 100);
         parent.rect(this.location.x + 25, this.location.y, 20, 20);
-    }
-    void healthCounter() {
-
     }
 }

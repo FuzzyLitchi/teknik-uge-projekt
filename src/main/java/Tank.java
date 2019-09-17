@@ -24,6 +24,7 @@ public class Tank {
     void shootingTank(PApplet parent) {
         if (parent.keyPressed) {
             if (parent.key == 'o') {
+                isShooting = true;
                 if (this.rocketAmmo > 0) {
                     if (isShooting = true) {
                         Rocket myRocket = new Rocket(this.location.copy(), new PVector(0,0));
