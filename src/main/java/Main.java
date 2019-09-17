@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Main extends PApplet{
     Tank tank;
+    Base base;
 
     MapLoader mapLoader = new MapLoader();
     Map map;
@@ -30,6 +31,14 @@ public class Main extends PApplet{
                 new PVector(200, 100),
                 new PVector(-40, 10)
         ));
+
+        base = new Base(
+                new PVector(100, 10),
+                100f,
+                100f,
+                100f,
+                tank
+        );
     }
 
     public void draw(){

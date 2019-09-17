@@ -36,17 +36,25 @@ public class Tank {
     void fuelCounter() {
         if (isMovingA) {
             this.fuel = fuel - 1;
+        } else {
+            this.fuel = fuel;
         }
         if (isMovingD) {
             this.fuel = fuel - 1;
+        } else {
+            this.fuel = fuel;
         }
         if (isMovingS) {
             this.fuel = fuel - 1;
+        } else {
+            this.fuel = fuel;
         }
         if (isMovingW) {
             this.fuel = fuel - 1;
+        } else {
+            this.fuel = fuel;
         }
-        if (this.fuel == 0) {
+        if (this.fuel <= 0) {
             isMovingA = false;
             isMovingD = false;
             isMovingS = false;
@@ -57,25 +65,40 @@ public class Tank {
     void movement(PApplet parent) {
         if (parent.keyPressed) {
             if (parent.key == 'w') {
-                this.location.y = location.y - 1;
+                this.isMovingW = true;
+                if (this.isMovingW = true) {
+                    this.location.y = location.y - 1;
+                } else {
+                    this.isMovingW = false;
+                }
             }
         }
         if (parent.keyPressed) {
             if (parent.key == 'a') {
                 this.location.x = location.x - 1;
+                this.isMovingA = true;
+            } else {
+                this.isMovingA = false;
             }
         }
         if (parent.keyPressed) {
             if (parent.key == 's') {
                 this.location.y = location.y + 1;
+                this.isMovingS = true;
+            } else {
+                this.isMovingS = false;
             }
         }
         if (parent.keyPressed) {
             if (parent.key == 'd') {
                 this.location.x = location.x + 1;
+                this.isMovingD = true;
+            } else {
+                this.isMovingD = false;
             }
         }
     }
+
     void display(PApplet parent) {
         parent.fill(0,255,0);
         parent.rect(this.location.x,this.location.y,30,30);
