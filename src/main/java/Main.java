@@ -3,6 +3,7 @@ import processing.core.PVector;
 
 public class Main extends PApplet{
     Tank tank;
+    Base base;
 
 
     public static void main(String[] args) {
@@ -16,6 +17,8 @@ public class Main extends PApplet{
     public void setup(){
         fill(120,50,240);
         tank = new Tank( new PVector(0,0), 100, 10, 50);
+
+        base = new Base(tank);
     }
 
     public void draw(){
