@@ -27,6 +27,6 @@ class Rocket {
         return location.x+width > other.location.x
                 && location.x < other.location.x + other.size.x
                 && location.y+height > other.location.y
-                && location.x < other.location.x + other.size.x;
+                && location.y < other.location.y + other.size.y;
     }
 }

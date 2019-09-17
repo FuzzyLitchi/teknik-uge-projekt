@@ -5,7 +5,10 @@ import java.util.ArrayList;
 
 public class Main extends PApplet{
     Tank tank;
-    ArrayList<Building> buildings = new ArrayList<Building>();
+
+    MapLoader mapLoader = new MapLoader();
+    Map map;
+
     ArrayList<Rocket> rockets = new ArrayList<Rocket>();
 
     public static void main(String[] args) {
@@ -20,7 +23,9 @@ public class Main extends PApplet{
         fill(120,50,240);
         tank = new Tank( new PVector(0,0), 100, 10, 50);
 
-        buildings.add(new Building(new PVector(100,100)));
+        mapLoader.generate(0,0);
+        map = mapLoader.load(0,0);
+
         rockets.add(new Rocket(
                 new PVector(200, 100),
                 new PVector(-40, 10)
@@ -32,15 +37,15 @@ public class Main extends PApplet{
         tank.update(this);
         for (Rocket rocket : rockets) {
             rocket.update();
-            for (int i = buildings.size(); i-- > 0; ) {
-                if (rocket.intersects(buildings.get(i))) {
-                    buildings.remove(i);
+            for (int i = map.buildings.size(); i-- > 0; ) {
+                if (rocket.intersects(map.buildings.get(i))) {
+                    map.buildings.remove(i);
                 }
             }
         }
 
         // Drawing
-        for (Building building : buildings) {
+        for (Building building : map.buildings) {
             building.display(this);
         }
 
