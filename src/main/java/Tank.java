@@ -1,5 +1,6 @@
 import processing.core.PApplet;
 import processing.core.PVector;
+import java.lang.Math;
 
 public class Tank {
     PVector location;
@@ -13,11 +14,11 @@ public class Tank {
     boolean isMovingD = false;
     boolean isShooting = false;
 
-    public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo){
+    public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo) {
         this.location = location;
         this.fuel = fuel;
-        this.rocketAmmo=rocketAmmo;
-        this.bulletAmmo=bulletAmmo;
+        this.rocketAmmo = rocketAmmo;
+        this.bulletAmmo = bulletAmmo;
     }
 
     void shootingTank(PApplet parent) {
@@ -100,22 +101,28 @@ public class Tank {
     }
 
     void display(PApplet parent) {
-        parent.fill(0,255,0);
-        parent.rect(this.location.x,this.location.y,30,30);
-        parent.ellipse(this.location.x+15,this.location.y+15,15,15);
+        parent.pushMatrix();
+        parent.translate(this.location.x, this.location.y);
+        parent.text("fuel:  " + this.fuel, 0, 50);
+        parent.rotate(rotation);
+        parent.fill(0, 255, 0);
+        parent.rect(-15, -15, 30, 30);
+        parent.ellipse(0, 0, 15, 15);
         parent.fill(0);
-        parent.text("fuel:  "+this.fuel,this.location.x,this.location.y+50);
+        parent.popMatrix();
     }
-    void update(PApplet parent){
+
+
+    void update(PApplet parent) {
         parent.background(255);
         this.shootingTank(parent);
         //this.fuelCounter();
 
         if (isMovingA) {
-            rotation -= 0.1f;
+            rotation -= 0.05f;
         }
         if (isMovingD) {
-            rotation += 0.1f;
+            rotation += 0.05f;
         }
 
         if (isMovingW) {
