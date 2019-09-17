@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 import processing.core.PVector;
-
+import java.lang.Math;
 import java.util.ArrayList;
 
 public class Main extends PApplet{
@@ -57,9 +57,7 @@ public class Main extends PApplet{
         for (Building building : map.buildings) {
             building.display(this);
         }
-
         tank.display( this);
-
         for (Rocket rocket : rockets) {
             rocket.display(this);
         }

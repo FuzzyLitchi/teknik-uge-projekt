@@ -1,10 +1,12 @@
 import processing.core.PApplet;
 import processing.core.PVector;
+import java.lang.Math;
 
 public class Tank {
-    PVector velocity = new PVector (0,0);
+    PVector velocity = new PVector(0, 0);
     PVector location;
     float fuel;
+    float angle;
     int rocketAmmo;
     int bulletAmmo;
     Boolean isMovingW = false;
@@ -13,11 +15,11 @@ public class Tank {
     Boolean isMovingD = false;
     Boolean isShooting = false;
 
-    public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo){
+    public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo) {
         this.location = location;
         this.fuel = fuel;
-        this.rocketAmmo=rocketAmmo;
-        this.bulletAmmo=bulletAmmo;
+        this.rocketAmmo = rocketAmmo;
+        this.bulletAmmo = bulletAmmo;
     }
 
     void shootingTank(PApplet parent) {
@@ -67,7 +69,8 @@ public class Tank {
             if (parent.key == 'w') {
                 this.isMovingW = true;
                 if (this.isMovingW = true) {
-                    this.location.y = location.y - 1;
+                    this.location.y = location.y + (float) (location.y*Math.sin(angle/(2*3.1415)*360));
+                    this.location.x = location.x + (float) (location.x*Math.cos(angle/(2*3.1415)*360));
                 } else {
                     this.isMovingW = false;
                 }
@@ -75,8 +78,8 @@ public class Tank {
         }
         if (parent.keyPressed) {
             if (parent.key == 'a') {
-                this.location.x = location.x - 1;
                 this.isMovingA = true;
+                this.angle = (float) (angle + 0.01);
             } else {
                 this.isMovingA = false;
             }
@@ -91,8 +94,8 @@ public class Tank {
         }
         if (parent.keyPressed) {
             if (parent.key == 'd') {
-                this.location.x = location.x + 1;
                 this.isMovingD = true;
+                this.angle = (float) (angle-0.01);
             } else {
                 this.isMovingD = false;
             }
@@ -100,13 +103,19 @@ public class Tank {
     }
 
     void display(PApplet parent) {
-        parent.fill(0,255,0);
-        parent.rect(this.location.x,this.location.y,30,30);
-        parent.ellipse(this.location.x+15,this.location.y+15,15,15);
+        parent.pushMatrix();
+        parent.translate(this.location.x, this.location.y);
+        parent.text("fuel:  " + this.fuel, 0, 50);
+        parent.rotate(angle);
+        parent.fill(0, 255, 0);
+        parent.rect(0, 0, 30, 30);
+        parent.ellipse(15, 15, 15, 15);
         parent.fill(0);
-        parent.text("fuel:  "+this.fuel,this.location.x,this.location.y+50);
+        parent.popMatrix();
     }
-    void update(PApplet parent){
+
+
+    void update(PApplet parent) {
         parent.background(255);
         this.shootingTank(parent);
         this.fuelCounter();
