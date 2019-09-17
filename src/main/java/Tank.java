@@ -2,16 +2,16 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Tank {
-    PVector velocity = new PVector (0,0);
     PVector location;
+    float rotation = 0;
     float fuel;
     int rocketAmmo;
     int bulletAmmo;
-    Boolean isMovingW = false;
-    Boolean isMovingA = false;
-    Boolean isMovingS = false;
-    Boolean isMovingD = false;
-    Boolean isShooting = false;
+    boolean isMovingW = false;
+    boolean isMovingA = false;
+    boolean isMovingS = false;
+    boolean isMovingD = false;
+    boolean isShooting = false;
 
     public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo){
         this.location = location;
@@ -25,7 +25,7 @@ public class Tank {
             if (parent.key == 'o') {
                 if (this.rocketAmmo > 0) {
                     if (isShooting = true) {
-                        Rocket myRocket = new Rocket(this.location.copy(), this.velocity.copy());
+                        Rocket myRocket = new Rocket(this.location.copy(), new PVector(0,0));
                         System.out.println("It works :)");
                     }
                 }
@@ -62,40 +62,40 @@ public class Tank {
         }
     }
 
-    void movement(PApplet parent) {
-        if (parent.keyPressed) {
-            if (parent.key == 'w') {
-                this.isMovingW = true;
-                if (this.isMovingW = true) {
-                    this.location.y = location.y - 1;
-                } else {
-                    this.isMovingW = false;
-                }
-            }
+    final static int W = 87;
+    final static int A = 65;
+    final static int S = 83;
+    final static int D = 68;
+    void handleKeyPress(int keyCode) {
+        switch (keyCode) {
+            case W:
+                isMovingW = true;
+                break;
+            case A:
+                isMovingA = true;
+                break;
+            case S:
+                isMovingS = true;
+                break;
+            case D:
+                isMovingD = true;
+                break;
         }
-        if (parent.keyPressed) {
-            if (parent.key == 'a') {
-                this.location.x = location.x - 1;
-                this.isMovingA = true;
-            } else {
-                this.isMovingA = false;
-            }
-        }
-        if (parent.keyPressed) {
-            if (parent.key == 's') {
-                this.location.y = location.y + 1;
-                this.isMovingS = true;
-            } else {
-                this.isMovingS = false;
-            }
-        }
-        if (parent.keyPressed) {
-            if (parent.key == 'd') {
-                this.location.x = location.x + 1;
-                this.isMovingD = true;
-            } else {
-                this.isMovingD = false;
-            }
+    }
+    void handleKeyRelease(int keyCode) {
+        switch (keyCode) {
+            case W:
+                isMovingW = false;
+                break;
+            case A:
+                isMovingA = false;
+                break;
+            case S:
+                isMovingS = false;
+                break;
+            case D:
+                isMovingD = false;
+                break;
         }
     }
 
@@ -109,7 +109,20 @@ public class Tank {
     void update(PApplet parent){
         parent.background(255);
         this.shootingTank(parent);
-        this.fuelCounter();
-        this.movement(parent);
+        //this.fuelCounter();
+
+        if (isMovingA) {
+            rotation -= 0.1f;
+        }
+        if (isMovingD) {
+            rotation += 0.1f;
+        }
+
+        if (isMovingW) {
+            location.add(new PVector(3,0).rotate(rotation));
+        }
+        if (isMovingS) {
+            location.add(new PVector(-3,0).rotate(rotation));
+        }
     }
 }

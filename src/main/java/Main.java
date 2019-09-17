@@ -17,7 +17,7 @@ public class Main extends PApplet{
     }
 
     public void settings(){
-        size(300,300);
+        size(800,800);
     }
 
     public void setup(){
@@ -65,4 +65,11 @@ public class Main extends PApplet{
         }
     }
 
+    public void keyPressed() {
+        tank.handleKeyPress(keyCode);
+    }
+
+    public void keyReleased() {
+        tank.handleKeyRelease(keyCode);
+    }
 }
