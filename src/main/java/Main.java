@@ -23,7 +23,7 @@ public class Main extends PApplet{
     public void setup(){
         fill(120,50,240);
         tank = new Tank( new PVector(0,0), 100, 10, 50);
-        base = new Base( new PVector (150,150), 1000, 10, 100, tank);
+        base = new Base( new PVector (width/2, (float) (height*0.1)), 1000, 10, 100, tank);
 
         mapLoader.generate(0,0);
         map = mapLoader.load(0,0);
@@ -62,6 +62,7 @@ public class Main extends PApplet{
         for (Rocket rocket : rockets) {
             rocket.display(this);
         }
+        base.display(this);
     }
 
     public void keyPressed() {

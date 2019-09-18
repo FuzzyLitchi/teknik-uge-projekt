@@ -4,14 +4,16 @@ import processing.core.PVector;
 public class Enemy {
     PVector location;
     PVector enemyBulletlocation;
+    PVector velocity;
     float damageOutput;
     float hp;
     Base base;
     Boolean rangeCheckerY;
     Boolean rangeCheckerX;
 
-    public Enemy(PVector location, PVector enemyBulletlocation, float damageOutput, float hp, Base base) {
+    public Enemy(PVector location, PVector enemyBulletlocation, PVector velocity, float damageOutput, float hp, Base base) {
         this.location = location;
+        this.velocity = velocity;
         this.enemyBulletlocation = enemyBulletlocation;
         this.damageOutput = damageOutput;
         this.hp = hp;
@@ -36,21 +38,37 @@ public class Enemy {
     void rangeChecker() {
         if (this.location.y - base.location.y <= 50 && this.location.y >= 150) {
             rangeCheckerY = true;
+        } else {
+            rangeCheckerY = false;
         }
-        if (this.location.y - base.location.y >= -50 && this.location.y <= 150) {
-            rangeCheckerY = true;
-        }
+        //if (this.location.y - base.location.y >= -50 && this.location.y <= 150) {
+        //rangeCheckerY = true;
         if (this.location.x - base.location.x <= 50 && this.location.x >= 150) {
             rangeCheckerX = true;
-        }
-        if (this.location.x - base.location.x >= -50 && this.location.x <= 150){
-            rangeCheckerX = true;
+        } else {
+            rangeCheckerX = false;
         }
     }
+    //if (this.location.x - base.location.x >= -50 && this.location.x <= 150){
+    //rangeCheckerX = true;
+
+
+    void shooting() {
+        if ((this.rangeCheckerX = true) && (this.rangeCheckerY = true)) {
+            base.hp = (float) (base.hp - 0.01);
+        }
+    }
+
     void display(PApplet parent) {
-        parent.fill(255,0,0);
-        parent.ellipse(this.location.x, this.location.y,8,8);
-        parent.fill(224,223,213);
-        parent.rect(this.location.x+4, this.location.y, 2,4);
+        parent.fill(255, 0, 0);
+        parent.ellipse(this.location.x, this.location.y, 8, 8);
+        parent.fill(224, 223, 213);
+        parent.rect(this.location.x + 4, this.location.y, 2, 4);
+    }
+
+    void update(PApplet parent){
+        shooting();
+        rangeChecker();
+        movementAI();
     }
 }
