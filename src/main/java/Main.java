@@ -12,25 +12,24 @@ public class Main extends PApplet{
 
     ArrayList<Rocket> rockets = new ArrayList<Rocket>();
 
+
+    final static int SCREEN_WIDTH = 800;
+    final static int SCREEN_HEIGHT = 800;
+
     public static void main(String[] args) {
         PApplet.main("Main");
     }
 
     public void settings(){
-        size(800,800);
+        size(SCREEN_WIDTH,SCREEN_HEIGHT);
     }
 
     public void setup(){
         fill(120,50,240);
-        tank = new Tank( new PVector(0,0), 100, 10, 50);
+        tank = new Tank( new PVector(400,400), 100, 30, 50);
 
         mapLoader.generate(0,0);
         map = mapLoader.load(0,0);
-
-        rockets.add(new Rocket(
-                new PVector(200, 100),
-                new PVector(-40, 10)
-        ));
 
         base = new Base(
                 new PVector(100, 10),
@@ -44,6 +43,33 @@ public class Main extends PApplet{
     public void draw(){
         // Update logic
         tank.update(this);
+
+        if (tank.location.x > SCREEN_WIDTH) {
+            mapLoader.store(map);
+            map = mapLoader.load(mapLoader.x+1, mapLoader.y);
+
+            tank.location.x -= SCREEN_WIDTH;
+        }
+        if (tank.location.x < 0) {
+            mapLoader.store(map);
+            map = mapLoader.load(mapLoader.x-1, mapLoader.y);
+
+            tank.location.x += SCREEN_WIDTH;
+        }
+
+        if (tank.location.y > SCREEN_HEIGHT) {
+            mapLoader.store(map);
+            map = mapLoader.load(mapLoader.x, mapLoader.y+1);
+
+            tank.location.y -= SCREEN_HEIGHT;
+        }
+        if (tank.location.y < 0) {
+            mapLoader.store(map);
+            map = mapLoader.load(mapLoader.x, mapLoader.y-1);
+
+            tank.location.y += SCREEN_HEIGHT;
+        }
+
         for (Rocket rocket : rockets) {
             rocket.update();
             for (int i = map.buildings.size(); i-- > 0; ) {
@@ -53,7 +79,9 @@ public class Main extends PApplet{
             }
         }
 
-        // Drawing
+        // DrawingR
+        background(255);
+
         for (Building building : map.buildings) {
             building.display(this);
         }
@@ -64,7 +92,7 @@ public class Main extends PApplet{
     }
 
     public void keyPressed() {
-        tank.handleKeyPress(keyCode);
+        tank.handleKeyPress(keyCode, this);
     }
 
     public void keyReleased() {

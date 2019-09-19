@@ -5,10 +5,10 @@ class Rocket {
     PVector location;
     PVector velocity;
 
-    float width = 20;
-    float height = 20;
+    float width = 5;
+    float height = 5;
 
-    Rocket(PVector location, PVector velocity) {
+    Rocket(PVector location, PVector velocity, float rotation) {
         this.location = location;
         this.velocity = velocity;
     }
@@ -20,7 +20,7 @@ class Rocket {
     }
 
     void display(PApplet parent) {
-        parent.rect(location.x, location.y, width, height);
+        parent.ellipse(location.x, location.y, width, height);
     }
 
     boolean intersects(Building other) {

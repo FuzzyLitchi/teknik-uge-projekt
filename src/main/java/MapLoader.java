@@ -16,9 +16,11 @@ public class MapLoader {
         Random r = new Random();
 
         ArrayList<Building> buildings = new ArrayList<Building>();
-        buildings.add(new Building(
-                new PVector(r.nextFloat() * 300, r.nextFloat() * 300)
-        ));
+        for (int i = 0; i < r.nextInt(5)+3; i++) {
+            buildings.add(new Building(
+                    new PVector(r.nextFloat() * 800, r.nextFloat() * 800)
+            ));
+        }
 
         map.buildings = buildings;
 
@@ -30,6 +32,13 @@ public class MapLoader {
     }
 
     Map load(int x, int y) {
+        this.x = x;
+        this.y = y;
+
+        if (!maps.containsKey(x+100*y)) {
+            generate(x, y);
+        }
+
         return maps.get(x+100*y);
     }
 }

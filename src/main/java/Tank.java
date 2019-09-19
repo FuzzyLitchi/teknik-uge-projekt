@@ -1,8 +1,9 @@
 import processing.core.PApplet;
 import processing.core.PVector;
 import java.lang.Math;
+import java.util.ArrayList;
 
-public class Tank {
+class Tank {
     PVector location;
     float rotation = 0;
     float fuel;
@@ -14,6 +15,9 @@ public class Tank {
     boolean isMovingD = false;
     boolean isShooting = false;
 
+    float rocketCoolDown = 0.5f; // in seconds
+    float rocketTimer = 0.0f;
+
     public Tank(PVector location, float fuel, int rocketAmmo, int bulletAmmo) {
         this.location = location;
         this.fuel = fuel;
@@ -21,53 +25,28 @@ public class Tank {
         this.bulletAmmo = bulletAmmo;
     }
 
-    void shootingTank(PApplet parent) {
-        if (parent.keyPressed) {
-            if (parent.key == 'o') {
-                if (this.rocketAmmo > 0) {
-                    if (isShooting = true) {
-                        Rocket myRocket = new Rocket(this.location.copy(), new PVector(0,0));
-                        System.out.println("It works :)");
-                    }
-                }
-            }
+    void fireRocket(ArrayList<Rocket> rockets) {
+        if (rocketTimer > 0f || rocketAmmo <= 0) {
+            return;
         }
-    }
 
-    void fuelCounter() {
-        if (isMovingA) {
-            this.fuel = fuel - 1;
-        } else {
-            this.fuel = fuel;
-        }
-        if (isMovingD) {
-            this.fuel = fuel - 1;
-        } else {
-            this.fuel = fuel;
-        }
-        if (isMovingS) {
-            this.fuel = fuel - 1;
-        } else {
-            this.fuel = fuel;
-        }
-        if (isMovingW) {
-            this.fuel = fuel - 1;
-        } else {
-            this.fuel = fuel;
-        }
-        if (this.fuel <= 0) {
-            isMovingA = false;
-            isMovingD = false;
-            isMovingS = false;
-            isMovingW = false;
-        }
+        rockets.add(
+            new Rocket(
+                this.location.copy(),
+                new PVector(300,0).rotate(rotation),
+                rotation
+            )
+        );
+        rocketTimer = rocketCoolDown;
+        rocketAmmo--;
     }
 
     final static int W = 87;
     final static int A = 65;
     final static int S = 83;
     final static int D = 68;
-    void handleKeyPress(int keyCode) {
+    final static int SPACE = 32;
+    void handleKeyPress(int keyCode, Main main) {
         switch (keyCode) {
             case W:
                 isMovingW = true;
@@ -81,6 +60,8 @@ public class Tank {
             case D:
                 isMovingD = true;
                 break;
+            case SPACE:
+                fireRocket(main.rockets);
         }
     }
     void handleKeyRelease(int keyCode) {
@@ -114,9 +95,7 @@ public class Tank {
 
 
     void update(PApplet parent) {
-        parent.background(255);
-        this.shootingTank(parent);
-        //this.fuelCounter();
+        rocketTimer -= 1f/60;
 
         if (isMovingA) {
             rotation -= 0.05f;
@@ -127,9 +106,11 @@ public class Tank {
 
         if (isMovingW) {
             location.add(new PVector(3,0).rotate(rotation));
+            fuel -= 0.005f;
         }
         if (isMovingS) {
             location.add(new PVector(-3,0).rotate(rotation));
+            fuel -= 0.005f;
         }
     }
 }
