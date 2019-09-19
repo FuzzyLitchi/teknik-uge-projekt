@@ -7,28 +7,40 @@ public class Civilians {
     int numAdults;
     int numElderly;
     int point;
+    Rocket rocket;
 
-    void civilianGenerator(PApplet parent){
-        numChild = (int) parent.random(1,5);
-        numAdults = (int) parent.random(1,5);
-        numElderly= (int) parent.random(1,5);
+    public Civilians(PVector location, int numChild, int numAdults, int numElderly, int point, Rocket rocket) {
+        this.location = location;
+        this.numChild = numChild;
+        this.numAdults = numAdults;
+        this.numElderly = numElderly;
+        this.point = point;
+        this.rocket = rocket;
     }
-    void setPoint(){
-        if (((((this.location.x-rocket.location.x)^2) <= 0) && ((this.locaiton.y-rocket.location.y)^2) <= 0 )){
+
+    void civilianGenerator(PApplet parent) {
+        numChild = (int) parent.random(1, 5);
+        numAdults = (int) parent.random(1, 5);
+        numElderly = (int) parent.random(1, 5);
+    }
+
+    void setPoint() {
+        if (Math.pow(this.location.x - rocket.location.x, 2) <= Math.sqrt(100) && Math.pow(this.location.x - rocket.location.x, 2) <= Math.sqrt(100)) {
             point = (numChild * 10) + point;
             point = (numAdults * 5) + point;
             point = (numElderly * 2) + point;
         }
     }
-    void display(PApplet parent){
+
+    void display(PApplet parent) {
         parent.pushMatrix();
-        parent.translate(location.x,location.y);
-        parent.fill(139,69,19);
-        parent.ellipse(0,0,5,5);
-        parent.fill(255,255,0);
-        parent.ellipse(10,10,9,9);
+        parent.translate(location.x, location.y);
+        parent.fill(139, 69, 19);
+        parent.ellipse(0, 0, 5, 5);
+        parent.fill(255, 255, 0);
+        parent.ellipse(10, 10, 9, 9);
         parent.fill(125);
-        parent.ellipse(0,12,7,7);
+        parent.ellipse(0, 12, 7, 7);
         parent.popMatrix();
     }
 }
