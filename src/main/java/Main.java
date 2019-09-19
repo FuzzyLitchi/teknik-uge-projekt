@@ -1,11 +1,13 @@
 import processing.core.PApplet;
 import processing.core.PVector;
+
 import java.lang.Math;
 import java.util.ArrayList;
 
-public class Main extends PApplet{
+public class Main extends PApplet {
     Tank tank;
     Base base;
+    Enemy enemy;
 
     MapLoader mapLoader = new MapLoader();
     Map map;
@@ -24,12 +26,14 @@ public class Main extends PApplet{
         size(SCREEN_WIDTH,SCREEN_HEIGHT);
     }
 
-    public void setup(){
-        fill(120,50,240);
+    public void setup() {
+        fill(120, 50, 240);
         tank = new Tank( new PVector(400,400), 100, 30, 50);
+        base = new Base(new PVector(width / 2, (float) (height * 0.1)), 1000, 10, 100, tank);
+        enemy = new Enemy(new PVector(500, random(100, 500)), new PVector(1, 1), new PVector(1, 1), 1, 100, base);
+        mapLoader.generate(0, 0);
+        map = mapLoader.load(0, 0);
 
-        mapLoader.generate(0,0);
-        map = mapLoader.load(0,0);
 
         base = new Base(
                 new PVector(100, 10),
@@ -40,7 +44,7 @@ public class Main extends PApplet{
         );
     }
 
-    public void draw(){
+    public void draw() {
         // Update logic
         tank.update(this);
 
@@ -89,6 +93,7 @@ public class Main extends PApplet{
         for (Rocket rocket : rockets) {
             rocket.display(this);
         }
+        base.display(this);
     }
 
     public void keyPressed() {

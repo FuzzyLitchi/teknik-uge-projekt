@@ -8,6 +8,7 @@ public class Base {
     float ammoRegenBullets;
     Boolean alive;
     Boolean isHome;
+    Boolean hitReg;
     Tank tank;
 
     public Base(PVector location, float hp, float ammoRegenRockets, float ammoRegenBullets, Tank tank) {
@@ -18,27 +19,43 @@ public class Base {
         this.tank = tank;
     }
 
-    void pitstop(PApplet parent) {
-        if (this.location == location) {
-            tank.rocketAmmo = 10;
-            tank.bulletAmmo = 100;
-            tank.fuel = 100;
+    void pitStop(PApplet parent) {
+        if (alive = true) {
+            if (tank.location == location) {
+                tank.rocketAmmo = 10;
+                tank.bulletAmmo = 100;
+                tank.fuel = 100;
+            }
         }
     }
 
-    /*void hitReg (PApplet parent) {
-        if ((((location.x-enemyBulletlocation.x)^2) <= 25) && (((location.y-enemyBulletlocation.y)^2) <= 25)){
-            this.hp = hp -1;
+    void healthChecker(PApplet parent) {
+
+
+        if (hp <= 0) {
+            alive = false;
+        } else {
+            alive = true;
         }
-    }*/
+    }
+
+    //void hitReg() {
+    //if (((((this.location.x-enemyBulletlocation.x)^2) <= 0) && ((this.locaiton.y-enemyBulletlocation.y)^2) <= 0 )){
+    //hp = hp -1;
+    //}
+    //}
 
     void display(PApplet parent) {
         parent.fill(125);
         parent.rect(this.location.x, this.location.y, 20, 100);
         parent.fill(0, 0, 100);
         parent.rect(this.location.x + 25, this.location.y, 20, 20);
+        parent.fill(0);
+        parent.text("HP" + hp, this.location.x, this.location.y + 70);
     }
-    void healthCounter() {
 
+    void update(PApplet parent) {
+        pitStop(parent);
+        healthChecker(parent);
     }
 }
