@@ -3,7 +3,7 @@ import processing.core.PVector;
 
 public class Base {
     PVector location;
-    float hp;
+    float HP;
     float ammoRegenRockets;
     float ammoRegenBullets;
     Boolean alive;
@@ -11,9 +11,9 @@ public class Base {
     Boolean hitReg;
     Tank tank;
 
-    public Base(PVector location, float hp, float ammoRegenRockets, float ammoRegenBullets, Tank tank) {
+    public Base(PVector location, float HP, float ammoRegenRockets, float ammoRegenBullets, Tank tank) {
         this.location = location;
-        this.hp = hp;
+        this.HP = HP;
         this.ammoRegenRockets = ammoRegenRockets;
         this.ammoRegenBullets = ammoRegenBullets;
         this.tank = tank;
@@ -21,7 +21,7 @@ public class Base {
 
     void pitStop(PApplet parent) {
         if (alive = true) {
-            if (tank.location == location) {
+            if (Math.pow(this.location.x - tank.location.x, 2) <= Math.sqrt(2500) && Math.pow(this.location.x - tank.location.x, 2) <= Math.sqrt(2500)){
                 tank.rocketAmmo = 10;
                 tank.bulletAmmo = 100;
                 tank.fuel = 100;
@@ -32,18 +32,12 @@ public class Base {
     void healthChecker(PApplet parent) {
 
 
-        if (hp <= 0) {
+        if (HP <= 0) {
             alive = false;
         } else {
             alive = true;
         }
     }
-
-    //void hitReg() {
-    //if (((((this.location.x-enemyBulletlocation.x)^2) <= 0) && ((this.locaiton.y-enemyBulletlocation.y)^2) <= 0 )){
-    //hp = hp -1;
-    //}
-    //}
 
     void display(PApplet parent) {
         parent.fill(125);
@@ -51,11 +45,13 @@ public class Base {
         parent.fill(0, 0, 100);
         parent.rect(this.location.x + 25, this.location.y, 20, 20);
         parent.fill(0);
-        parent.text("HP" + hp, this.location.x, this.location.y + 70);
+        parent.text("HP" + this.HP, this.location.x, this.location.y + 70);
     }
 
     void update(PApplet parent) {
-        pitStop(parent);
-        healthChecker(parent);
+        if (alive = true) {
+            pitStop(parent);
+            healthChecker(parent);
+        }
     }
 }

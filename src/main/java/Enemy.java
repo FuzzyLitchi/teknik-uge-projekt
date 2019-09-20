@@ -24,29 +24,29 @@ public class Enemy {
     }
 
     void movementAI() {
-        if (this.location.y - base.location.y < -50) {
-            this.location.y = location.y + 1;
-        }
+        //if (this.location.y - base.location.y < -50) {
+        //  this.location.y = location.y + 1;
+        //}
         if (this.location.x - base.location.x > 50) {
             this.location.x = location.x - 1;
         }
         if (this.location.y - base.location.y > 50) {
             this.location.y = location.y - 1;
         }
-        if (this.location.x - base.location.x < -50) {
-            this.location.x = location.x + 1;
-        }
+        //if (this.location.x - base.location.x < -50) {
+        //this.location.x = location.x + 1;
+        //}
     }
 
     void rangeChecker() {
-        if (this.location.y - base.location.y <= 50 && this.location.y >= 150) {
+        if (this.location.y - base.location.y <= 50 && this.location.y >= 10) {
             rangeCheckerY = true;
         } else {
             rangeCheckerY = false;
         }
         //if (this.location.y - base.location.y >= -50 && this.location.y <= 150) {
         //rangeCheckerY = true;
-        if (this.location.x - base.location.x <= 50 && this.location.x >= 150) {
+        if (this.location.x - base.location.x <= 50 && this.location.x >= 0) {
             rangeCheckerX = true;
         } else {
             rangeCheckerX = false;
@@ -56,9 +56,10 @@ public class Enemy {
     //rangeCheckerX = true;
 
 
-    void shooting() {
-        if ((this.rangeCheckerX = true) && (this.rangeCheckerY = true)) {
-            base.hp = (float) (base.hp - 0.01);
+    void shooting(PApplet parent) {
+        if ((rangeCheckerX = true) && (rangeCheckerY = true)) {
+            base.HP = (float) (base.HP - 0.2);
+            //parent.println("gamer"+base.HP);
         }
     }
 
@@ -79,8 +80,11 @@ public class Enemy {
     }
 
     void update(PApplet parent) {
-        shooting();
-        rangeChecker();
-        movementAI();
+        if (alive = true) {
+            shooting(parent);
+            rangeChecker();
+            movementAI();
+            //killCheck();
+        }
     }
 }

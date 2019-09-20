@@ -1,21 +1,23 @@
 import processing.core.PApplet;
 import processing.core.PVector;
 
+import java.util.ArrayList;
+
 public class Civilians {
     PVector location;
     int numChild;
     int numAdults;
     int numElderly;
     int point;
-    Rocket rocket;
+    Rocket rockets;
 
-    public Civilians(PVector location, int numChild, int numAdults, int numElderly, int point, Rocket rocket) {
+    public Civilians(PVector location, int numChild, int numAdults, int numElderly, int point, ArrayList<Rocket> rocket) {
         this.location = location;
         this.numChild = numChild;
         this.numAdults = numAdults;
         this.numElderly = numElderly;
         this.point = point;
-        this.rocket = rocket;
+        this.rockets = rockets;
     }
 
     void civilianGenerator(PApplet parent) {
@@ -25,7 +27,7 @@ public class Civilians {
     }
 
     void setPoint() {
-        if (Math.pow(this.location.x - rocket.location.x, 2) <= Math.sqrt(100) && Math.pow(this.location.x - rocket.location.x, 2) <= Math.sqrt(100)) {
+        if (Math.pow(this.location.x - rockets.location.x, 2) <= Math.sqrt(196) && Math.pow(this.location.x - rockets.location.x, 2) <= Math.sqrt(196)) {
             point = (numChild * 10) + point;
             point = (numAdults * 5) + point;
             point = (numElderly * 2) + point;
@@ -42,5 +44,10 @@ public class Civilians {
         parent.fill(125);
         parent.ellipse(0, 12, 7, 7);
         parent.popMatrix();
+    }
+
+    void update(PApplet parent){
+        setPoint();
+        civilianGenerator(parent);
     }
 }

@@ -87,8 +87,9 @@ class Tank {
         parent.text("fuel:  " + this.fuel, 0, 50);
         parent.rotate(rotation);
         parent.fill(0, 255, 0);
-        parent.rect(-15, -15, 30, 30);
+        parent.rect(-15, -15, 42, 30);
         parent.ellipse(0, 0, 15, 15);
+        parent.rect(0,-2,22,3);
         parent.fill(0);
         parent.popMatrix();
     }
